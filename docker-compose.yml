@@ -1,0 +1,58 @@
+services:
+  nginx:
+    image: openresty/openresty:alpine
+    container_name: "remark42-proxy"
+    hostname: "remark42-proxy"
+    restart: always
+    ports:
+      - "8080:80"  # Expose nginx on port 8080
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - remark
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  remark:
+    image: ghcr.io/umputun/remark42:latest
+    container_name: "remark42"
+    hostname: "remark42"
+    restart: always
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+    expose:
+      - "8080"
+
+    environment:
+      - TIME_ZONE=Asia/Singapore
+      - REMARK_URL=${REMARK_URL}
+      - SITE=SPMods
+      - SECRET=${SECRET}
+      - DEBUG=${DEBUG}
+      # Email Auth
+      - AUTH_EMAIL_ENABLE=true
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=465
+      - SMTP_TLS=true
+      - SMTP_STARTTLS=true
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - AUTH_EMAIL_FROM=${AUTH_EMAIL_FROM}
+      - NOTIFY_EMAIL_FROM=${NOTIFY_EMAIL_FROM}
+    volumes:
+      - ./var:/srv/var
+      - ./remark.css:/srv/web/remark.css:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://127.0.0.1:8080/ping | grep -q '^pong$'"]
+      interval: 5s
+      timeout: 30s
+      retries: 3
