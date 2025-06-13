@@ -47,6 +47,10 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - AUTH_EMAIL_FROM=${AUTH_EMAIL_FROM}
       - NOTIFY_EMAIL_FROM=${NOTIFY_EMAIL_FROM}
+      # Auth config
+      - AUTH_ANON=${ALLOW_ANON}
+      - AUTH_SEND_JWT_HEADER=false
+      - ALLOWED_HOSTS='self',${ALLOWED_HOSTS}
     volumes:
       - ./var:/srv/var
       - ./remark.css:/srv/web/remark.css:ro
