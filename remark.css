@@ -91,11 +91,13 @@
     --color-primary-faint: var(--color-primary-500)/30;
 
     /* Pile of mess for rewriting colors */
+    /* Hex related */
     --color15: var(--color-primary-500);
     --color9: var(--color-primary-500);
     --color33: var(--color-primary-700);
-    --primary-color: var(--color-primary);
-	--primary-brighter-color: var(--color-primary-400);
+    /* RGB related */
+    --primary-color: 246, 50, 62; /* --color-primary */
+	--primary-brighter-color: 254, 107, 116; /* --color-primary-400 */
 }
 
 :root .dark {
@@ -110,11 +112,13 @@
 	--text-color: var(--white-color);
 
     /* Pile of mess for rewriting colors */
+    /* Hex related */
     --color15: var(--color-primary-500);
     --color9: var(--color-primary-500);
     --color33: var(--color-primary-700);
-    --primary-color: var(--color-primary);
-	--primary-brighter-color: var(--color-primary-400);
+    /* RGB related */
+    --primary-color: 246, 50, 62; /* --color-primary */
+	--primary-brighter-color: 254, 107, 116; /* --color-primary-400 */
 }
 
 .root {
